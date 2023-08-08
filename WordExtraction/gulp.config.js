@@ -23,11 +23,11 @@ const gulpConfig = {
             cssSourcemaps: false,
         },
         path: {
-            src: "../{demo}/src",
-            common_src: "../{demo}/src",
+            src: "src",
+            common_src: "src",
             node_modules: "node_modules",
         },
-        dist: ["../{demo}/dist/assets"],
+        dist: ["wwwroot/assets"],
     },
     build: {
         base: {

@@ -10,7 +10,17 @@
 </head>
 <body>
 <div>
-      
+    <form method="post" enctype="multipart/form-data" asp-controller="Extract" asp-action="UploadFile">
+        <label for="formFileLg" class="form-label">Large file input example</label>
+        <input class="form-control form-control-lg" id="formFileLg" type="file" name="file">
+        <button type="submit" class="btn btn-primary">
+            <i class="ki-duotone ki-arrow-up fs-2x">
+                <i class="path1"></i>
+                <i class="path2"></i>
+            </i>
+            Upload
+        </button>
+    </form>
 </div>
 </body>
 </html>

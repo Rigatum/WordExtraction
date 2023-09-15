@@ -1,3 +1,6 @@
+using WordExtraction.Extensions;
+using WordExtraction.Services;
+
 namespace WordExtraction
 {
     public class Program
@@ -8,6 +11,7 @@ namespace WordExtraction
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddCustomServices();
 
             var app = builder.Build();
 

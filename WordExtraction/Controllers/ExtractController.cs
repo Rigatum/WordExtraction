@@ -13,7 +13,7 @@ public class ExtractController : Controller
         _fileProcess = fileProcess;
     }
     
-    // GET
+    [HttpGet]
     public IActionResult Index()
     {
         return View();
@@ -22,16 +22,8 @@ public class ExtractController : Controller
     [HttpPost]
     public async Task<ActionResult> UploadFile(IFormFile file)
     {
-        using (var fileStream = file.OpenReadStream())
-        {
-            using (var memoryStream = new MemoryStream())
-            {
-                _fileProcess.SetFileRead(new WebPageByUriRead());
-                _fileProcess.GetUniqueWords();
-                
-                await fileStream.CopyToAsync(memoryStream);
-            }
-        }
+        _fileProcess.SetFileRead(new PdfRead());
+        _fileProcess.GetUniqueWords(file);
         
         return Ok("Файл успешно обработан.");
     }

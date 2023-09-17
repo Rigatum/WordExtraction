@@ -1,19 +1,20 @@
-﻿using WordExtraction.Services.ReadStrategy;
+﻿using WordExtraction.Extensions;
+using WordExtraction.Services.ReadStrategy;
 
 namespace WordExtraction.Services;
 
 public class FileProcess : IFileProcess
 {
-    private IRead _read;
+    private ITypeRead _typeRead;
     
-    public void SetFileRead(IRead read)
+    public void SetFileRead(ITypeRead typeRead)
     {
-        _read = read;
+        _typeRead = typeRead;
     }
     
-    public HashSet<string> GetUniqueWords()
+    public HashSet<string> GetUniqueWords(IFormFile formFile)
     {
-        _read.DoAlgorithm();
+        formFile.Read(_typeRead);
         
         throw new NotImplementedException();
     }

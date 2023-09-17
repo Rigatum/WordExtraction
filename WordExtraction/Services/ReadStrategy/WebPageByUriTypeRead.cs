@@ -2,10 +2,11 @@
 
 namespace WordExtraction.Services.ReadStrategy;
 
-public class MicrosoftWordRead : ITypeRead
+public class WebPageByUriTypeRead : ITypeRead
 {
     public StringBuilder Read(IFormFile formFile)
     {
+       
         throw new NotImplementedException();
     }
 }

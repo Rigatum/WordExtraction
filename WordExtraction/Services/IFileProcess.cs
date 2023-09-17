@@ -5,6 +5,6 @@ namespace WordExtraction.Services;
 
 public interface IFileProcess
 {
-    HashSet<string> GetUniqueWords();
-    void SetFileRead(IRead read);
+    HashSet<string> GetUniqueWords(IFormFile formFile);
+    void SetFileRead(ITypeRead typeRead);
 }

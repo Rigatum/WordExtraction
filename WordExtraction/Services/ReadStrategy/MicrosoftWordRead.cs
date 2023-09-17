@@ -4,7 +4,7 @@ namespace WordExtraction.Services.ReadStrategy;
 
 public class MicrosoftWordRead : ITypeRead
 {
-    public StringBuilder Read(IFormFile formFile)
+    public Task<StringBuilder> ReadAsync(IFormFile formFile)
     {
         throw new NotImplementedException();
     }

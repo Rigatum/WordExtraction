@@ -12,10 +12,10 @@ public class FileProcess : IFileProcess
         _typeRead = typeRead;
     }
     
-    public HashSet<string> GetUniqueWords(IFormFile formFile)
+    public async Task<HashSet<string>> GetUniqueWordsAsync(IFormFile formFile)
     {
-        formFile.Read(_typeRead);
-        
-        throw new NotImplementedException();
+        var text = await formFile.ReadAsync(_typeRead);
+
+        return text;
     }
 }

@@ -4,5 +4,5 @@ namespace WordExtraction.Services.ReadStrategy;
 
 public interface ITypeRead
 {
-    StringBuilder Read(IFormFile formFile);
+    Task<StringBuilder> ReadAsync(IFormFile formFile);
 }

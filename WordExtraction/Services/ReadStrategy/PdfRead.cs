@@ -6,18 +6,22 @@ namespace WordExtraction.Services.ReadStrategy;
 
 public class PdfRead : ITypeRead
 {
-    public StringBuilder Read(IFormFile formFile)
+    public async Task<StringBuilder> ReadAsync(IFormFile formFile)
     {
-        PdfReader reader = new PdfReader(formFile.OpenReadStream());
-        StringBuilder text = new StringBuilder();
-        
-        for (int page = 1; page <= reader.NumberOfPages; page++)
+        return await Task.Run(() =>
         {
-            text.Append(PdfTextExtractor.GetTextFromPage(reader, page));
-        }
+            using (PdfReader reader = new PdfReader(formFile.OpenReadStream()))
+            {
+                StringBuilder text = new StringBuilder();
+
+                for (int page = 1; page <= reader.NumberOfPages; page++)
+                {
+                    text.Append(PdfTextExtractor.GetTextFromPage(reader, page));
+                }
+                
+                return text;
+            }
+        });
         
-        reader.Close();
-        
-        return text;
     }
 }

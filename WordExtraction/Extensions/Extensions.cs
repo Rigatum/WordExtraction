@@ -1,4 +1,5 @@
-﻿using WordExtraction.Services;
+﻿using System.Text.RegularExpressions;
+using WordExtraction.Services;
 using WordExtraction.Services.ReadStrategy;
 
 namespace WordExtraction.Extensions;
@@ -10,9 +11,13 @@ public static class Extensions
         services.AddSingleton<IFileProcess, FileProcess>();
     }
     
-    public static HashSet<string> Read(this IFormFile formFile, ITypeRead typeRead)
+    public static async Task<HashSet<string>> ReadAsync(this IFormFile formFile, ITypeRead typeRead)
     {
-        typeRead.Read(formFile);
-        throw new NotImplementedException();
+        var textStringBuilder=  await typeRead.ReadAsync(formFile);
+        string text = textStringBuilder.ToString();
+        string[] words = Regex.Split(text, @"\s+");
+        HashSet<string> hashSet = new HashSet<string>(words);
+
+        return hashSet;
     }
 }

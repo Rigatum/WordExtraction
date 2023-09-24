@@ -18,14 +18,14 @@ public class ExtractController : Controller
     {
         return View();
     }
-
+    
     [HttpPost]
+    [RequestSizeLimit(500000000)]
     public async Task<ActionResult> UploadFile(IFormFile file)
     {
         _fileProcess.SetFileRead(new PdfRead());
         var q = await _fileProcess.GetUniqueWordsAsync(file);
-        
-        
+
         return Ok(q);
     }
 }

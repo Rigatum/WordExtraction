@@ -15,7 +15,10 @@ public static class Extensions
     {
         var textStringBuilder=  await typeRead.ReadAsync(formFile);
         string text = textStringBuilder.ToString();
+        text = Regex.Replace(text, @"[^\u0000-\u007F]+", string.Empty);
+        text = Regex.Replace(text, @"[^a-zA-Z]+", " ");
         string[] words = Regex.Split(text, @"\s+");
+        
         HashSet<string> hashSet = new HashSet<string>(words);
 
         return hashSet;

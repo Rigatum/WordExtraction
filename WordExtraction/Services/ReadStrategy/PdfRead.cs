@@ -1,6 +1,7 @@
 ﻿using System.Text;
-using iTextSharp.text.pdf;
-using iTextSharp.text.pdf.parser;
+using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Canvas.Parser;
+using iText.Kernel.Pdf.Canvas.Parser.Listener;
 
 namespace WordExtraction.Services.ReadStrategy;
 
@@ -10,15 +11,20 @@ public class PdfRead : ITypeRead
     {
         return await Task.Run(() =>
         {
-            using PdfReader reader = new PdfReader(formFile.OpenReadStream());
-            StringBuilder text = new StringBuilder();
-
-            for (int page = 1; page <= reader.NumberOfPages; page++)
+            using (var reader = new PdfReader(formFile.OpenReadStream()))
             {
-                text.Append(PdfTextExtractor.GetTextFromPage(reader, page));
+                var text = new StringBuilder();
+                var pdfDoc = new PdfDocument(reader);
+
+                for (int page = 1; page <= pdfDoc.GetNumberOfPages(); page++)
+                {
+                    text.Append(PdfTextExtractor.GetTextFromPage(pdfDoc.GetPage(page), new SimpleTextExtractionStrategy()));
+                }
+
+                pdfDoc.Close();
+
+                return text;
             }
-                
-            return text;
         });
         
     }

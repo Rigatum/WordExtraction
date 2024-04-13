@@ -16,7 +16,7 @@ public static class Extensions
         var textStringBuilder = await typeRead.ReadAsync(formFile);
         string text = textStringBuilder.ToString();
         text = Regex.Replace(text, @"[^\u0000-\u007F]+", string.Empty);
-        text = Regex.Replace(text, @"[^a-zA-Z]+", " ").ToLower();
+        text = Regex.Replace(text, "[^a-zA-Z]+", " ").ToLower();
         string[] words = Regex.Split(text, @"\s+");
         var wordsByFrequencyDict = words
             .GroupBy(w => w)

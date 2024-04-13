@@ -5,6 +5,6 @@ namespace WordExtraction.Services;
 
 public interface IFileProcess
 {
-    Task<HashSet<string>> GetUniqueWordsAsync(IFormFile formFile);
+    Task<Dictionary<string, int>> GetUniqueWordsAsync(IFormFile formFile);
     void SetFileRead(ITypeRead typeRead);
 }

@@ -10,17 +10,15 @@ public class PdfRead : ITypeRead
     {
         return await Task.Run(() =>
         {
-            using (PdfReader reader = new PdfReader(formFile.OpenReadStream()))
-            {
-                StringBuilder text = new StringBuilder();
+            using PdfReader reader = new PdfReader(formFile.OpenReadStream());
+            StringBuilder text = new StringBuilder();
 
-                for (int page = 1; page <= reader.NumberOfPages; page++)
-                {
-                    text.Append(PdfTextExtractor.GetTextFromPage(reader, page));
-                }
-                
-                return text;
+            for (int page = 1; page <= reader.NumberOfPages; page++)
+            {
+                text.Append(PdfTextExtractor.GetTextFromPage(reader, page));
             }
+                
+            return text;
         });
         
     }

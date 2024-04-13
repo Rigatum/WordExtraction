@@ -24,8 +24,8 @@ public class ExtractController : Controller
     public async Task<ActionResult> UploadFile(IFormFile file)
     {
         _fileProcess.SetFileRead(new PdfRead());
-        var q = await _fileProcess.GetUniqueWordsAsync(file);
+        var wordsAndFrequencyDict = await _fileProcess.GetUniqueWordsAsync(file);
 
-        return Ok(q);
+        return Ok(wordsAndFrequencyDict.OrderByDescending(x => x.Value));
     }
 }

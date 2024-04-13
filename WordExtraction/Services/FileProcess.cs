@@ -12,7 +12,7 @@ public class FileProcess : IFileProcess
         _typeRead = typeRead;
     }
     
-    public async Task<HashSet<string>> GetUniqueWordsAsync(IFormFile formFile)
+    public async Task<Dictionary<string, int>> GetUniqueWordsAsync(IFormFile formFile)
     {
         var text = await formFile.ReadAsync(_typeRead);
 

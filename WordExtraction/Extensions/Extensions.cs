@@ -8,19 +8,20 @@ public static class Extensions
 {
     public static void AddCustomServices(this IServiceCollection services)
     {
-        services.AddSingleton<IFileProcess, FileProcess>();
+        services.AddTransient<IFileProcess, FileProcess>();
     }
     
-    public static async Task<HashSet<string>> ReadAsync(this IFormFile formFile, ITypeRead typeRead)
+    public static async Task<Dictionary<string, int>> ReadAsync(this IFormFile formFile, ITypeRead typeRead)
     {
-        var textStringBuilder=  await typeRead.ReadAsync(formFile);
+        var textStringBuilder = await typeRead.ReadAsync(formFile);
         string text = textStringBuilder.ToString();
         text = Regex.Replace(text, @"[^\u0000-\u007F]+", string.Empty);
-        text = Regex.Replace(text, @"[^a-zA-Z]+", " ");
+        text = Regex.Replace(text, @"[^a-zA-Z]+", " ").ToLower();
         string[] words = Regex.Split(text, @"\s+");
-        
-        HashSet<string> hashSet = new HashSet<string>(words);
+        var wordsByFrequencyDict = words
+            .GroupBy(w => w)
+            .ToDictionary(g => g.Key, g => g.Count());
 
-        return hashSet;
+        return wordsByFrequencyDict;
     }
 }

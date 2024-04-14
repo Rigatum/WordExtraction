@@ -9,6 +9,7 @@ public static class Extensions
     public static void AddCustomServices(this IServiceCollection services)
     {
         services.AddTransient<IFileProcess, FileProcess>();
+        services.AddTransient<ITranslateService, TranslateService>();
     }
     
     public static async Task<Dictionary<string, int>> ReadAsync(this IFormFile formFile, ITypeRead typeRead)

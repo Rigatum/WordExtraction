@@ -2,6 +2,6 @@
 {
     public interface ITranslateService
     {
-        public Task TranslateAsync(IEnumerable<string> words);
+        public Task<string> TranslateAsync(IEnumerable<string> words, string sourceLanguage, string targetLanguage);
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Text;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace WordExtraction.Services
 {
@@ -12,25 +11,38 @@ namespace WordExtraction.Services
             _factory = factory;
         }
 
-        public async Task TranslateAsync(IEnumerable<string> words)
+        public async Task<string> TranslateAsync(IEnumerable<string> words, string sourceLanguage, string targetLanguage)
         {
             var httpClient = _factory.CreateClient();
-            string workingDirectory = Environment.CurrentDirectory;
-            var s = await File.ReadAllTextAsync($"{workingDirectory}/test.env");
 
-            httpClient.DefaultRequestHeaders.Add("Authorization", $"Api-Key {s}");
+            string apiKey = GetApiKey().Result;
 
-            using StringContent jsonContent = new(
-                JsonSerializer.Serialize(new
+            httpClient.DefaultRequestHeaders.Add("Authorization", $"Api-Key {apiKey}");
+
+            var json = new StringContent(TransformWordsToJson().Result);
+
+            return await httpClient.PostAsync(new Uri("https://translate.api.cloud.yandex.net/translate/v2/translate"), json).Result.Content.ReadAsStringAsync();
+
+            static async Task<string> GetApiKey() =>  await File.ReadAllTextAsync($"{Environment.CurrentDirectory}/test.env");
+
+            async Task<string> TransformWordsToJson()
+            {
+                using var stream = new MemoryStream();
+
+                var model = new
                 {
-                    sourceLanguageCode = "ru",
-                    targetLanguageCode = "en",
+                    sourceLanguageCode = sourceLanguage,
+                    targetLanguageCode = targetLanguage,
                     texts = "машина"
-                }),
-                Encoding.UTF8,
-                "application/json");
+                };
 
-            var q = httpClient.PostAsync(new Uri("https://translate.api.cloud.yandex.net/translate/v2/translate"), jsonContent).Result.Content.ReadAsStringAsync().Result;
+                await JsonSerializer.SerializeAsync(stream, model, model.GetType());
+                stream.Position = 0;
+                using var reader = new StreamReader(stream);
+                var stringContent = await reader.ReadToEndAsync();
+
+                return stringContent;
+            }
         }
     }
 }

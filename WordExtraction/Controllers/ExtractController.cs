@@ -6,9 +6,9 @@ namespace WordExtraction.Controllers;
 
 public class ExtractController : Controller
 {
-    private readonly IFileProcess _fileProcess;
+    private readonly IFileProcessService _fileProcess;
 
-    public ExtractController(IFileProcess fileProcess)
+    public ExtractController(IFileProcessService fileProcess)
     {
         _fileProcess = fileProcess;
     }

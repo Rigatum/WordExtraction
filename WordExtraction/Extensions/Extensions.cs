@@ -8,7 +8,7 @@ public static class Extensions
 {
     public static void AddCustomServices(this IServiceCollection services)
     {
-        services.AddTransient<IFileProcess, FileProcess>();
+        services.AddTransient<IFileProcessService, FileProcessService>();
         services.AddTransient<ITranslateService, TranslateService>();
     }
     

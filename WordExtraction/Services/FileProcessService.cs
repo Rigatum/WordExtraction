@@ -3,12 +3,12 @@ using WordExtraction.Services.ReadStrategy;
 
 namespace WordExtraction.Services;
 
-public class FileProcess : IFileProcess
+public class FileProcessService : IFileProcessService
 {
     private ITypeRead _typeRead;
     private readonly ITranslateService _translateService;
 
-    public FileProcess(ITranslateService translateService)
+    public FileProcessService(ITranslateService translateService)
     {
         _translateService = translateService;
     }
@@ -26,7 +26,7 @@ public class FileProcess : IFileProcess
             .Where(d => d.Value > 50)
             .Select(d => d.Key);
 
-        _ = _translateService.TranslateAsync(words);
+        _ = _translateService.TranslateAsync(words, "ru", "en");
 
         return text;
     }

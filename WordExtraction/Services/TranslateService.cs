@@ -4,45 +4,46 @@ namespace WordExtraction.Services
 {
     public class TranslateService : ITranslateService
     {
-        private readonly IHttpClientFactory _factory;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public TranslateService(IHttpClientFactory factory)
+        public TranslateService(IHttpClientFactory httpClientFactory)
         {
-            _factory = factory;
+            _httpClientFactory = httpClientFactory;
         }
 
         public async Task<string> TranslateAsync(IEnumerable<string> words, string sourceLanguage, string targetLanguage)
         {
-            var httpClient = _factory.CreateClient();
+            var httpClient = _httpClientFactory.CreateClient();
 
-            string apiKey = GetApiKey().Result;
+            var solutionPath = Directory.GetParent(Environment.CurrentDirectory)?.FullName;
+            string apiKey = GetApiKey(solutionPath).Result;
 
             httpClient.DefaultRequestHeaders.Add("Authorization", $"Api-Key {apiKey}");
 
-            var json = new StringContent(TransformWordsToJson().Result);
+            var json = new StringContent(TransformWordsToJson(sourceLanguage, targetLanguage, words).Result);
 
             return await httpClient.PostAsync(new Uri("https://translate.api.cloud.yandex.net/translate/v2/translate"), json).Result.Content.ReadAsStringAsync();
+        }
 
-            static async Task<string> GetApiKey() =>  await File.ReadAllTextAsync($"{Environment.CurrentDirectory}/test.env");
+        public async Task<string> GetApiKey(string path) =>  await File.ReadAllTextAsync($"{path}/test.env");
 
-            async Task<string> TransformWordsToJson()
+        public async Task<string> TransformWordsToJson(string sourceLanguage, string targetLanguage, IEnumerable<string> words)
+        {
+            using var stream = new MemoryStream();
+
+            var model = new
             {
-                using var stream = new MemoryStream();
+                sourceLanguageCode = sourceLanguage,
+                targetLanguageCode = targetLanguage,
+                texts = string.Join(",", words)
+            };
 
-                var model = new
-                {
-                    sourceLanguageCode = sourceLanguage,
-                    targetLanguageCode = targetLanguage,
-                    texts = string.Join(",", words)
-                };
+            await JsonSerializer.SerializeAsync(stream, model, model.GetType());
+            stream.Position = 0;
+            using var reader = new StreamReader(stream);
+            var stringContent = await reader.ReadToEndAsync();
 
-                await JsonSerializer.SerializeAsync(stream, model, model.GetType());
-                stream.Position = 0;
-                using var reader = new StreamReader(stream);
-                var stringContent = await reader.ReadToEndAsync();
-
-                return stringContent;
-            }
+            return stringContent;
         }
     }
 }

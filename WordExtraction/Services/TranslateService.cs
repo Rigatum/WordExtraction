@@ -33,7 +33,7 @@ namespace WordExtraction.Services
                 {
                     sourceLanguageCode = sourceLanguage,
                     targetLanguageCode = targetLanguage,
-                    texts = "машина"
+                    texts = string.Join(",", words)
                 };
 
                 await JsonSerializer.SerializeAsync(stream, model, model.GetType());

@@ -23,10 +23,11 @@ public class FileProcessService : IFileProcessService
         var text = await formFile.ReadAsync(_typeRead);
 
         var words = text
-            .Where(d => d.Value > 50)
+            .Where(d => d.Value > 200)
+            .OrderByDescending(d => d.Value)
             .Select(d => d.Key);
 
-        _ = _translateService.TranslateAsync(words, "ru", "en");
+        _ = await _translateService.TranslateAsync(words, "en", "ru");
 
         return text;
     }

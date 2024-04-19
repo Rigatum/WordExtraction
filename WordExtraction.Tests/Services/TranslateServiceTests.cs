@@ -9,7 +9,7 @@ public class TranslateServiceTests
     private readonly IHttpClientFactory _httpClientFactory = new Mock<IHttpClientFactory>(MockBehavior.Strict).Object;
 
     [Fact]
-    public async Task GetApiKey_WhenFileWithApiKeyExist_ReturnApiKeyReadFromFile()
+    public async Task GetApiKey_WithValidPathToFile_ReturnApiKeyReadFromFile()
     {
         var translateService = new TranslateService(_httpClientFactory);
 
@@ -21,7 +21,7 @@ public class TranslateServiceTests
     }
 
     [Fact]
-    public void GetApiKey_WhenFileWithApiKeyNotExist_ReturnFileNotFoundException()
+    public void GetApiKey_WithInvalidPathToFile_ReturnFileNotFoundException()
     {
         var translateService = new TranslateService(_httpClientFactory);
 

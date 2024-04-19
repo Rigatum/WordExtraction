@@ -1,5 +1,4 @@
 using WordExtraction.Extensions;
-using WordExtraction.Services;
 
 namespace WordExtraction
 {

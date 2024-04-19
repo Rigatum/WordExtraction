@@ -1,6 +1,7 @@
 ﻿using Moq;
 using FluentAssertions;
 using WordExtraction.Services;
+using FluentAssertions.Execution;
 
 namespace WordExtraction.Tests.Services;
 
@@ -30,5 +31,23 @@ public class TranslateServiceTests
         Func<Task> act = async () => await translateService.GetApiKey(solutionPath);
 
         act.Should().ThrowAsync<FileNotFoundException>();
+    }
+
+    [Fact]
+    public void CreateHttpClient_WithValidHttpClientFactory_ShouldReturnHttpClientInstance()
+    {
+        var factoryMock = new Mock<IHttpClientFactory>(MockBehavior.Strict);
+        var expectedClient = new HttpClient();
+        factoryMock.Setup(f => f.CreateClient(It.IsAny<string>())).Returns(expectedClient);
+        var translateService = new TranslateService(factoryMock.Object);
+
+        var httpClient = translateService.CreateHttpClient(factoryMock.Object);
+
+        using (new AssertionScope())
+        {
+            httpClient.Should().BeOfType<HttpClient>();
+            httpClient.Should().NotBeNull();
+            factoryMock.Verify(f => f.CreateClient(It.IsAny<string>()), Times.Once);
+        }
     }
 }

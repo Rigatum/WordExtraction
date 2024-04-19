@@ -7,12 +7,18 @@ namespace WordExtraction.Tests.Services;
 
 public class TranslateServiceTests
 {
-    private readonly IHttpClientFactory _httpClientFactory = new Mock<IHttpClientFactory>(MockBehavior.Strict).Object;
+    private readonly Mock<IHttpClientFactory> _httpClientFactoryMock = new(MockBehavior.Strict);
+
+    public TranslateServiceTests()
+    {
+        var expectedClient = new HttpClient();
+        _httpClientFactoryMock.Setup(f => f.CreateClient(It.IsAny<string>())).Returns(expectedClient);
+    }
 
     [Fact]
     public async Task GetApiKey_WithValidPathToFile_ReturnApiKeyReadFromFile()
     {
-        var translateService = new TranslateService(_httpClientFactory);
+        var translateService = new TranslateService(_httpClientFactoryMock.Object);
 
         var solutionPath = Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.Parent?.FullName;
 
@@ -24,7 +30,7 @@ public class TranslateServiceTests
     [Fact]
     public void GetApiKey_WithInvalidPathToFile_ReturnFileNotFoundException()
     {
-        var translateService = new TranslateService(_httpClientFactory);
+        var translateService = new TranslateService(_httpClientFactoryMock.Object);
 
         var solutionPath = Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.FullName;
 

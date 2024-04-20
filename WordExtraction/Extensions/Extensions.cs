@@ -1,6 +1,10 @@
 ﻿using System.Text.RegularExpressions;
 using WordExtraction.Services;
+using WordExtraction.Services.FileProcessService;
+using WordExtraction.Services.FileSystemService;
 using WordExtraction.Services.ReadStrategy;
+using WordExtraction.Services.StringContentConverter;
+using WordExtraction.Services.TranslateService;
 
 namespace WordExtraction.Extensions;
 
@@ -10,6 +14,8 @@ public static class Extensions
     {
         services.AddTransient<IFileProcessService, FileProcessService>();
         services.AddTransient<ITranslateService, TranslateService>();
+        services.AddTransient<IFileSystemService, FileSystemService>();
+        services.AddTransient<IStringContentConverter, StringContentConverter>();
     }
     
     public static async Task<Dictionary<string, int>> ReadAsync(this IFormFile formFile, ITypeRead typeRead)

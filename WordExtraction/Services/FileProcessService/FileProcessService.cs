@@ -1,7 +1,8 @@
 ﻿using WordExtraction.Extensions;
 using WordExtraction.Services.ReadStrategy;
+using WordExtraction.Services.TranslateService;
 
-namespace WordExtraction.Services;
+namespace WordExtraction.Services.FileProcessService;
 
 public class FileProcessService : IFileProcessService
 {
@@ -17,7 +18,7 @@ public class FileProcessService : IFileProcessService
     {
         _typeRead = typeRead;
     }
-    
+
     public async Task<Dictionary<string, int>> GetUniqueWordsAsync(IFormFile formFile)
     {
         var text = await formFile.ReadAsync(_typeRead);

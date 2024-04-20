@@ -1,4 +1,4 @@
-﻿namespace WordExtraction.Services
+﻿namespace WordExtraction.Services.TranslateService
 {
     public interface ITranslateService
     {

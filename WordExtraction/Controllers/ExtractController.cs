@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WordExtraction.Services;
+using WordExtraction.Services.FileProcessService;
 using WordExtraction.Services.ReadStrategy;
 
 namespace WordExtraction.Controllers;

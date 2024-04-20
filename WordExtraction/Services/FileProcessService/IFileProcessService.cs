@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using WordExtraction.Services.ReadStrategy;
+﻿using WordExtraction.Services.ReadStrategy;
 
-namespace WordExtraction.Services;
+namespace WordExtraction.Services.FileProcessService;
 
 public interface IFileProcessService
 {

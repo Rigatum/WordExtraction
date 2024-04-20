@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using WordExtraction.Models;
 
 namespace WordExtraction.Services.StringContentConverter
 {
@@ -8,16 +9,14 @@ namespace WordExtraction.Services.StringContentConverter
         {
             using var stream = new MemoryStream();
 
-            var model = new
-            {
-                sourceLanguageCode = sourceLanguage,
-                targetLanguageCode = targetLanguage,
-                texts = string.Join(",", words)
-            };
+            var model = new TranslateWordsModel(sourceLanguage, targetLanguage, words);
 
             await JsonSerializer.SerializeAsync(stream, model, model.GetType());
+
             stream.Position = 0;
+
             using var reader = new StreamReader(stream);
+
             var stringContent = await reader.ReadToEndAsync();
 
             return new StringContent(stringContent);

@@ -1,15 +1,15 @@
 ﻿using FluentAssertions;
 using WordExtraction.Models;
 
-namespace WordExtraction.Tests.Services;
+namespace WordExtraction.Tests.ServiceTests;
 
 public class TranslateWordsModelTests
 {
     [Theory]
-    [InlineData("de", "ru", new[] {"car", "mother"})]
-    [InlineData("ru", "de", new[] {""})]
-    [InlineData("de", "en", new[] {"324"})]
-    [InlineData("de", "en", new[] {"polizei", "pferd"})]
+    [InlineData("de", "ru", new[] { "car", "mother" })]
+    [InlineData("ru", "de", new[] { "" })]
+    [InlineData("de", "en", new[] { "324" })]
+    [InlineData("de", "en", new[] { "polizei", "pferd" })]
     public void TranslateWordsModelConstructor(string sourceLanguage, string targetLanguage, IEnumerable<string> words)
     {
         var translateWordsModel = new TranslateWordsModel(sourceLanguage, targetLanguage, words);

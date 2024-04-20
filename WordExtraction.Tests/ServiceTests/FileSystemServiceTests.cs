@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using WordExtraction.Services.FileSystemService;
 
-namespace WordExtraction.Tests.Services;
+namespace WordExtraction.Tests.ServiceTests;
 
 public class FileSystemServiceTests
 {

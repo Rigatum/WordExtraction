@@ -23,8 +23,7 @@ public class ExtractController : Controller
     [RequestSizeLimit(500000000)]
     public async Task<ActionResult> UploadFile(IFormFile file)
     {
-        _fileProcess.SetFileRead(new PdfRead());
-        var wordsAndFrequencyDict = await _fileProcess.GetUniqueWordsAsync(file);
+        var wordsAndFrequencyDict = await _fileProcess.GetUniqueWordsAsync(file, new PdfRead());
 
         return Ok(wordsAndFrequencyDict.OrderByDescending(x => x.Value));
     }

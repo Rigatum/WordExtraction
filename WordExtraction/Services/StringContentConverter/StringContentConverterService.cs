@@ -3,7 +3,7 @@ using WordExtraction.Models;
 
 namespace WordExtraction.Services.StringContentConverter
 {
-    public class StringContentConverter : IStringContentConverter
+    public class StringContentConverterService : IStringContentConverterService
     {
         public async Task<StringContent> Convert(string sourceLanguage, string targetLanguage, IEnumerable<string> words)
         {

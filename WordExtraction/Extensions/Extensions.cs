@@ -15,7 +15,7 @@ public static class Extensions
         services.AddTransient<IFileProcessService, FileProcessService>();
         services.AddTransient<ITranslateService, TranslateService>();
         services.AddTransient<IFileSystemService, FileSystemService>();
-        services.AddTransient<IStringContentConverter, StringContentConverter>();
+        services.AddTransient<IStringContentConverterService, StringContentConverterService>();
     }
     
     public static async Task<Dictionary<string, int>> ReadAsync(this IFormFile formFile, ITypeRead typeRead)

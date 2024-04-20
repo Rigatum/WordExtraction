@@ -7,10 +7,10 @@ namespace WordExtraction.Services.TranslateService
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IFileSystemService _fileSystemService;
-        private readonly IStringContentConverter _stringContentConverter;
+        private readonly IStringContentConverterService _stringContentConverter;
 
         public TranslateService(IHttpClientFactory httpClientFactory, IFileSystemService apiKeyService,
-            IStringContentConverter stringContentConverter)
+            IStringContentConverterService stringContentConverter)
         {
             _httpClientFactory = httpClientFactory;
             _fileSystemService = apiKeyService;

@@ -17,7 +17,7 @@ namespace WordExtraction.Services.TranslateService
             _stringContentConverter = stringContentConverter;
         }
          
-        public async Task<string> TranslateAsync(IEnumerable<string> words, string sourceLanguage, string targetLanguage)
+        public async Task<string> TranslateViaYandexByHttpAsync(IEnumerable<string> words, string sourceLanguage, string targetLanguage)
         {
             var httpClient = _httpClientFactory.CreateClient();
 

@@ -28,7 +28,7 @@ public class FileProcessService : IFileProcessService
             .OrderByDescending(d => d.Value)
             .Select(d => d.Key);
 
-        _ = await _translateService.TranslateAsync(words, "en", "ru");
+        _ = await _translateService.TranslateViaYandexByHttpAsync(words, "en", "ru");
 
         return text;
     }

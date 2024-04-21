@@ -13,7 +13,7 @@ public class TranslateWordsModelTests
     [InlineData("de", "en", new[] { "polizei", "pferd" })]
     public void TranslateWordsModelConstructor(string sourceLanguage, string targetLanguage, IEnumerable<string> words)
     {
-        var translateWordsModel = CreateTranslateWordsModelWithCtor(sourceLanguage, targetLanguage, words);
+        var translateWordsModel = CreateTranslateWordsModelWithCustomCtor(sourceLanguage, targetLanguage, words);
 
         using (new AssertionScope())
         {
@@ -28,6 +28,6 @@ public class TranslateWordsModelTests
         }
     }
 
-    private TranslateWordsModel CreateTranslateWordsModelWithCtor(string sourceLanguage,
+    private TranslateWordsModel CreateTranslateWordsModelWithCustomCtor(string sourceLanguage,
         string targetLanguage, IEnumerable<string> words) => new (sourceLanguage, targetLanguage, words);
 }

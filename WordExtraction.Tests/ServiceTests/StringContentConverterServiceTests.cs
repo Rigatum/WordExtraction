@@ -16,7 +16,7 @@ public class StringContentConverterServiceTests
     [InlineData("de", "jp", new[] { "polizei", "pferd", "dsf", "" })]
     public async Task Convert_BunchOfParameters_ReturnStringContent(string sourceLanguage, string targetLanguage, IEnumerable<string> words)
     {
-        var stringContentConverterService = CreateDefaultContentConverterService();
+        var stringContentConverterService = CreateContentConverterServiceWithDefaultCtor();
 
         var content = await stringContentConverterService.Convert(sourceLanguage, targetLanguage, words);
 
@@ -36,7 +36,7 @@ public class StringContentConverterServiceTests
     public async Task Convert_BunchOfParameters_ReturnStringContentWithSameDataAfterDeserialization
         (string sourceLanguage, string targetLanguage, IEnumerable<string> words)
     {
-        var stringContentConverterService = CreateDefaultContentConverterService();
+        var stringContentConverterService = CreateContentConverterServiceWithDefaultCtor();
 
         var content = await stringContentConverterService.Convert(sourceLanguage, targetLanguage, words);
         var reader = await content.ReadAsStreamAsync();
@@ -57,5 +57,5 @@ public class StringContentConverterServiceTests
         }
     }
 
-    private StringContentConverterService CreateDefaultContentConverterService() => new();
+    private StringContentConverterService CreateContentConverterServiceWithDefaultCtor() => new();
 }

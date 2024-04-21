@@ -13,7 +13,7 @@ public class TranslateWordsModelTests
     [InlineData("de", "en", new[] { "polizei", "pferd" })]
     public void TranslateWordsModelConstructor(string sourceLanguage, string targetLanguage, IEnumerable<string> words)
     {
-        var translateWordsModel = new TranslateWordsModel(sourceLanguage, targetLanguage, words);
+        var translateWordsModel = CreateTranslateWordsModelWithCtor(sourceLanguage, targetLanguage, words);
 
         using (new AssertionScope())
         {
@@ -27,4 +27,7 @@ public class TranslateWordsModelTests
             translateWordsModel.Words.Should().BeEquivalentTo(words);
         }
     }
+
+    private TranslateWordsModel CreateTranslateWordsModelWithCtor(string sourceLanguage,
+        string targetLanguage, IEnumerable<string> words) => new TranslateWordsModel(sourceLanguage, targetLanguage, words);
 }

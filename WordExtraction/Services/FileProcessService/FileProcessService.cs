@@ -6,7 +6,7 @@ namespace WordExtraction.Services.FileProcessService;
 
 public class FileProcessService : IFileProcessService
 {
-    private ITypeRead _typeRead = null!;
+    private ITypeRead _typeRead;
     private readonly ITranslateService _translateService;
 
     public FileProcessService(ITranslateService translateService)
@@ -14,10 +14,13 @@ public class FileProcessService : IFileProcessService
         _translateService = translateService;
     }
 
-    public async Task<Dictionary<string, int>> GetUniqueWordsAsync(IFormFile formFile, ITypeRead typeRead)
+    public void SetTypeRead(ITypeRead typeRead)
     {
         _typeRead = typeRead;
+    }
 
+    public async Task<Dictionary<string, int>> GetUniqueWordsAsync(IFormFile formFile, ITypeRead typeRead)
+    {
         var text = await formFile.ReadAsync(_typeRead);
 
         var words = text

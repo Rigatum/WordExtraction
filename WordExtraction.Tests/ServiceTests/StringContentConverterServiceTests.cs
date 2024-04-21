@@ -12,11 +12,11 @@ public class StringContentConverterServiceTests
     [InlineData("de", "ru", new[] { "car", "mother" })]
     [InlineData("ru", "de", new[] { "" })]
     [InlineData("de", "en", new[] { "324" })]
-    [InlineData("de", "en", new[] { "polizei", "pferd" })]
-    [InlineData("de", "en", new[] { "polizei", "pferd", "dsf", "" })]
-    public async Task Convert(string sourceLanguage, string targetLanguage, IEnumerable<string> words)
+    [InlineData("ru", "en", new[] { "топор", "мачта" })]
+    [InlineData("de", "jp", new[] { "polizei", "pferd", "dsf", "" })]
+    public async Task Convert_BunchOfParameters_ReturnStringContent(string sourceLanguage, string targetLanguage, IEnumerable<string> words)
     {
-        var stringContentConverterService = new StringContentConverterService();
+        var stringContentConverterService = CreateDefaultContentConverterService();
 
         var content = await stringContentConverterService.Convert(sourceLanguage, targetLanguage, words);
 
@@ -24,15 +24,28 @@ public class StringContentConverterServiceTests
         {
             content.Should().NotBeNull();
             content.Should().BeOfType(typeof(StringContent));
+        }
+    }
 
-            var reader = await content.ReadAsStreamAsync();
+    [Theory]
+    [InlineData("de", "ru", new[] { "car", "mother" })]
+    [InlineData("ru", "de", new[] { "" })]
+    [InlineData("de", "en", new[] { "324" })]
+    [InlineData("ru", "en", new[] { "топор", "мачта" })]
+    [InlineData("de", "jp", new[] { "polizei", "pferd", "dsf", "" })]
+    public async Task Convert_BunchOfParameters_ReturnStringContentWithSameDataAfterDeserialization
+        (string sourceLanguage, string targetLanguage, IEnumerable<string> words)
+    {
+        var stringContentConverterService = CreateDefaultContentConverterService();
 
-            var deserializeObject = await JsonSerializer.DeserializeAsync(reader, typeof(TranslateWordsModel));
+        var content = await stringContentConverterService.Convert(sourceLanguage, targetLanguage, words);
+        var reader = await content.ReadAsStreamAsync();
+        var deserializeObject = await JsonSerializer.DeserializeAsync(reader, typeof(TranslateWordsModel));
+        var model = (TranslateWordsModel)deserializeObject!;
 
+        using (new AssertionScope())
+        {
             deserializeObject.Should().NotBeNull();
-
-            var model = (TranslateWordsModel)deserializeObject!;
-
             model.SourceLanguage.Should().NotBeNullOrWhiteSpace();
             model.TargetLanguage.Should().NotBeNullOrWhiteSpace();
             model.Words.Should().NotBeNullOrEmpty();
@@ -43,4 +56,6 @@ public class StringContentConverterServiceTests
             model.Words.Should().BeEquivalentTo(words);
         }
     }
+
+    private StringContentConverterService CreateDefaultContentConverterService() => new StringContentConverterService();
 }

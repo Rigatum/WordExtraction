@@ -29,5 +29,5 @@ public class TranslateWordsModelTests
     }
 
     private TranslateWordsModel CreateTranslateWordsModelWithCtor(string sourceLanguage,
-        string targetLanguage, IEnumerable<string> words) => new TranslateWordsModel(sourceLanguage, targetLanguage, words);
+        string targetLanguage, IEnumerable<string> words) => new (sourceLanguage, targetLanguage, words);
 }

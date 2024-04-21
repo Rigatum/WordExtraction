@@ -31,5 +31,5 @@ public class FileSystemServiceTests
         act.Should().ThrowAsync<FileNotFoundException>();
     }
 
-    private FileSystemService CreateDefaultFileSystemService() => new FileSystemService();
+    private FileSystemService CreateDefaultFileSystemService() => new();
 }

@@ -57,5 +57,5 @@ public class StringContentConverterServiceTests
         }
     }
 
-    private StringContentConverterService CreateDefaultContentConverterService() => new StringContentConverterService();
+    private StringContentConverterService CreateDefaultContentConverterService() => new();
 }

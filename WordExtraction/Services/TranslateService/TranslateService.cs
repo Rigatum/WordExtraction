@@ -21,7 +21,7 @@ namespace WordExtraction.Services.TranslateService
         {
             var httpClient = _httpClientFactory.CreateClient();
 
-            var solutionPath = Directory.GetParent(Environment.CurrentDirectory)?.FullName;
+            var solutionPath = _fileSystemService.GetSolutionPath();
 
             string apiKey = await _fileSystemService.GetContentFromFile($"{solutionPath}/test.env");
 

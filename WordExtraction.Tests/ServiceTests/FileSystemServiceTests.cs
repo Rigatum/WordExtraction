@@ -8,7 +8,7 @@ public class FileSystemServiceTests
     [Fact]
     public async Task GetContentFromFile_WithValidPathToFile_ReturnApiKeyReadFromFile()
     {
-        var fileSystemService = CreateFileSystemServiceWithDefaultCtor();
+        FileSystemService fileSystemService = Setup();
 
         var correctPathToFile =
             $"{Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.Parent?.FullName}/test.env";
@@ -21,7 +21,7 @@ public class FileSystemServiceTests
     [Fact]
     public void GetContentFromFile_WithInvalidPathToFile_ReturnFileNotFoundException()
     {
-        var fileSystemService = CreateFileSystemServiceWithDefaultCtor();
+        FileSystemService fileSystemService = Setup();
 
         var correctPathToFile =
             $"{Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.FullName}/test.env";
@@ -31,5 +31,15 @@ public class FileSystemServiceTests
         act.Should().ThrowAsync<FileNotFoundException>();
     }
 
-    private FileSystemService CreateFileSystemServiceWithDefaultCtor() => new();
+    [Fact]
+    public void GetPathToApiKey()
+    {
+        FileSystemService fileSystemService = Setup();
+
+        var path = fileSystemService.GetSolutionPath();
+
+        path.Should().NotBeNullOrWhiteSpace();
+    }
+
+    private FileSystemService Setup() => new();
 }

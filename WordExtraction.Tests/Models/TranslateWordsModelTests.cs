@@ -2,7 +2,7 @@
 using FluentAssertions.Execution;
 using WordExtraction.Models;
 
-namespace WordExtraction.Tests.ServiceTests;
+namespace WordExtraction.Tests.Models;
 
 public class TranslateWordsModelTests
 {
@@ -11,7 +11,7 @@ public class TranslateWordsModelTests
     [InlineData("ru", "de", new[] { "" })]
     [InlineData("de", "en", new[] { "324" })]
     [InlineData("de", "en", new[] { "polizei", "pferd" })]
-    public void TranslateWordsModelConstructor(string sourceLanguage, string targetLanguage, IEnumerable<string> words)
+    public void Constructor_WithArguments_Succeeds(string sourceLanguage, string targetLanguage, IEnumerable<string> words)
     {
         var translateWordsModel = CreateTranslateWordsModelWithCustomCtor(sourceLanguage, targetLanguage, words);
 
@@ -29,5 +29,5 @@ public class TranslateWordsModelTests
     }
 
     private TranslateWordsModel CreateTranslateWordsModelWithCustomCtor(string sourceLanguage,
-        string targetLanguage, IEnumerable<string> words) => new (sourceLanguage, targetLanguage, words);
+        string targetLanguage, IEnumerable<string> words) => new(sourceLanguage, targetLanguage, words);
 }

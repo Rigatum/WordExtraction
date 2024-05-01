@@ -11,21 +11,18 @@ public class PdfRead : ITypeRead
     {
         return await Task.Run(() =>
         {
-            using (var reader = new PdfReader(formFile.OpenReadStream()))
+            using var reader = new PdfReader(formFile.OpenReadStream());
+            var text = new StringBuilder();
+            var pdfDoc = new PdfDocument(reader);
+
+            for (int page = 1; page <= pdfDoc.GetNumberOfPages(); page++)
             {
-                var text = new StringBuilder();
-                var pdfDoc = new PdfDocument(reader);
-
-                for (int page = 1; page <= pdfDoc.GetNumberOfPages(); page++)
-                {
-                    text.Append(PdfTextExtractor.GetTextFromPage(pdfDoc.GetPage(page), new SimpleTextExtractionStrategy()));
-                }
-
-                pdfDoc.Close();
-
-                return text;
+                text.Append(PdfTextExtractor.GetTextFromPage(pdfDoc.GetPage(page), new SimpleTextExtractionStrategy()));
             }
+
+            pdfDoc.Close();
+
+            return text;
         });
-        
     }
 }

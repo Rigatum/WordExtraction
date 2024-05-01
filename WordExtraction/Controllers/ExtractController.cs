@@ -25,7 +25,7 @@ public class ExtractController : Controller
     {
         _fileProcess.SetTypeRead(new PdfRead());
 
-        var wordsAndFrequencyDict = await _fileProcess.GetUniqueWordsAsync(file, new PdfRead());
+        var wordsAndFrequencyDict = await _fileProcess.GetUniqueWordsAsync(file);
 
         return Ok(wordsAndFrequencyDict.OrderByDescending(x => x.Value));
     }

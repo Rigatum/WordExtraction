@@ -11,7 +11,7 @@ namespace WordExtraction.Tests.ServiceTests;
 public class TranslateServiceTests
 {
     [Fact]
-    public async Task TranslateServiceConstructorWithDI()
+    public async Task Constructor_WithDI_Succeeds()
     {
         var words = new List<string> { "корабль", "карта", "монитор" };
         var sourceLanguage = "ru";

@@ -17,7 +17,7 @@ namespace WordExtraction.Services.TranslateService
             _stringContentConverter = stringContentConverter;
         }
          
-        public async Task<string> TranslateViaYandexByHttpAsync(IEnumerable<string> words, string sourceLanguage, string targetLanguage)
+        public async Task<string> TranslateViaYandexByHttpAsync(IEnumerable<string> words, string sourceLanguageCode, string targetLanguageCode)
         {
             var httpClient = _httpClientFactory.CreateClient();
 
@@ -27,7 +27,7 @@ namespace WordExtraction.Services.TranslateService
 
             httpClient.DefaultRequestHeaders.Add("Authorization", $"Api-Key {apiKey}");
 
-            var json = await _stringContentConverter.Convert(sourceLanguage, targetLanguage, words);
+            var json = await _stringContentConverter.Convert(sourceLanguageCode, targetLanguageCode, words);
 
             return await httpClient.PostAsync(new Uri("https://translate.api.cloud.yandex.net/translate/v2/translate"), json).Result.Content.ReadAsStringAsync();
         }

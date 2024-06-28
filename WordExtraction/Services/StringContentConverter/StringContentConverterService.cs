@@ -5,11 +5,11 @@ namespace WordExtraction.Services.StringContentConverter
 {
     public class StringContentConverterService : IStringContentConverterService
     {
-        public async Task<StringContent> Convert(string sourceLanguage, string targetLanguage, IEnumerable<string> words)
+        public async Task<StringContent> Convert(string sourceLanguageCode, string targetLanguageCode, IEnumerable<string> words)
         {
             using var stream = new MemoryStream();
 
-            var model = new TranslateWordsModel(sourceLanguage, targetLanguage, words);
+            var model = new TranslateWordsModel(sourceLanguageCode, targetLanguageCode, words);
 
             await JsonSerializer.SerializeAsync(stream, model, model.GetType());
 

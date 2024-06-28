@@ -2,14 +2,14 @@
 {
     public class TranslateWordsModel
     {
-        public string SourceLanguage { get; set; }
-        public string TargetLanguage { get; set; }
+        public string SourceLanguageCode { get; set; }
+        public string TargetLanguageCode { get; set; }
         public IEnumerable<string> Words { get; set; }
 
-        public TranslateWordsModel(string sourceLanguage, string targetLanguage, IEnumerable<string> words)
+        public TranslateWordsModel(string sourceLanguageCode, string targetLanguageCode, IEnumerable<string> words)
         {
-            SourceLanguage = sourceLanguage;
-            TargetLanguage = targetLanguage;
+            SourceLanguageCode = sourceLanguageCode;
+            TargetLanguageCode = targetLanguageCode;
             Words = words;
         }
     }

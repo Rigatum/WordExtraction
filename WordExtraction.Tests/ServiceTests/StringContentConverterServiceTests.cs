@@ -46,12 +46,12 @@ public class StringContentConverterServiceTests
         using (new AssertionScope())
         {
             deserializeObject.Should().NotBeNull();
-            model.SourceLanguage.Should().NotBeNullOrWhiteSpace();
-            model.TargetLanguage.Should().NotBeNullOrWhiteSpace();
+            model.SourceLanguageCode.Should().NotBeNullOrWhiteSpace();
+            model.TargetLanguageCode.Should().NotBeNullOrWhiteSpace();
             model.Words.Should().NotBeNullOrEmpty();
             model.Words.Should().AllBeOfType(typeof(string));
-            model.SourceLanguage.Should().BeEquivalentTo(sourceLanguage);
-            model.TargetLanguage.Should().BeEquivalentTo(targetLanguage);
+            model.SourceLanguageCode.Should().BeEquivalentTo(sourceLanguage);
+            model.TargetLanguageCode.Should().BeEquivalentTo(targetLanguage);
             model.Words.Should().HaveSameCount(words);
             model.Words.Should().BeEquivalentTo(words);
         }

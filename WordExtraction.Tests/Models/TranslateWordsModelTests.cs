@@ -17,12 +17,12 @@ public class TranslateWordsModelTests
 
         using (new AssertionScope())
         {
-            translateWordsModel.SourceLanguage.Should().NotBeNullOrWhiteSpace();
-            translateWordsModel.TargetLanguage.Should().NotBeNullOrWhiteSpace();
+            translateWordsModel.SourceLanguageCode.Should().NotBeNullOrWhiteSpace();
+            translateWordsModel.TargetLanguageCode.Should().NotBeNullOrWhiteSpace();
             translateWordsModel.Words.Should().NotBeNullOrEmpty();
             translateWordsModel.Words.Should().AllBeOfType(typeof(string));
-            translateWordsModel.SourceLanguage.Should().BeEquivalentTo(sourceLanguage);
-            translateWordsModel.TargetLanguage.Should().BeEquivalentTo(targetLanguage);
+            translateWordsModel.SourceLanguageCode.Should().BeEquivalentTo(sourceLanguage);
+            translateWordsModel.TargetLanguageCode.Should().BeEquivalentTo(targetLanguage);
             translateWordsModel.Words.Should().HaveSameCount(words);
             translateWordsModel.Words.Should().BeEquivalentTo(words);
         }
